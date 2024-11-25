@@ -1,16 +1,33 @@
-#ifndef EncoderHandler
-#define EncoderHandler
+#ifndef EncoderHandler_h
+#define EncoderHandler_h
 
-int encoderCount1 = 0;          // Raw encoder count for motor 1 (A)
-int lastAAState = 0;            // Previous state of AA
+class EncoderHandler { // Class Declaration
+  public:
+    EncoderHandler(int AAPin, int BAPin, int ABPin, int BBPin); // Constructor
 
-int encoderCount2 = 0;          // Raw encoder count for motor 2 (A)
-int lastABState = 0;            // Previous state of AB
+    void handleEncoder1();      // Handle encoder 1
+    void handleEncoder2();      // Handle encoder 2
+    void resetEncoders();       // Zero out encoder values
 
-void handleEncoder1();
+    int returnEncoder1();       // Return encoder 1 tick value
+    int returnEncoder2();       // Return encoder 2 tick value
 
-void handleEncoder2();
+    int returnRotation1();      // Return encoder 1 rotation value
+    int returnRotation2();      // Return encoder 2 rotation value
 
-void resetEncoders();
+  private: // Pin + prev state storage
+    int encoderCount1;          // Raw encoder count for motor 1 (A)
+    int lastAAState;            // Previous state of AA
+
+    int encoderCount2;          // Raw encoder count for motor 2 (A)
+    int lastABState;            // Previous state of AB
+
+    int encoderAAPin;           // Encoder Pins
+    int encoderBAPin;
+    int encoderABPin;
+    int encoderBBPin;
+
+    int cpr;                    // 700 encoder ticks per revolution for our motor
+};
 
 #endif

@@ -1,8 +1,22 @@
 #include <EncoderHandler.hpp>
 #include <Arduino.h>
 
+EncoderHandler::EncoderHandler(int AA, int BA, int AB, int BB) { // Constructor
+  encoderCount1 = 0;
+  lastAAState = 0;
 
-void handleEncoder1() {
+  encoderCount2 = 0;
+  lastABState = 0;
+
+  encoderAAPin = AA;
+  encoderBAPin = BA;
+  encoderABPin = AB;
+  encoderBBPin = BB;
+
+  cpr = 700;
+}
+
+void EncoderHandler::handleEncoder1() {
   int currentAAState = digitalRead(encoderAAPin);
   int currentBAState = digitalRead(encoderBAPin);
 
@@ -24,7 +38,7 @@ void handleEncoder1() {
   lastAAState = currentAAState;
 }
 
-void handleEncoder2() {
+void EncoderHandler::handleEncoder2() {
   int currentABState = digitalRead(encoderABPin);
   int currentBBState = digitalRead(encoderBBPin);
 
@@ -46,9 +60,25 @@ void handleEncoder2() {
   lastABState = currentABState;
 }
 
-void resetEncoders() {
+void EncoderHandler::resetEncoders() {
   encoderCount1 = 0;
   encoderCount2 = 0;
   lastAAState = digitalRead(encoderAAPin);
   lastABState = digitalRead(encoderABPin);
+}
+
+int EncoderHandler::returnEncoder1() {
+  return encoderCount1;
+}
+
+int EncoderHandler::returnEncoder2() {
+  return encoderCount2;
+}
+
+int EncoderHandler::returnRotation1() {
+  return (encoderCount1/cpr);
+}
+
+int EncoderHandler::returnRotation2() {
+  return (encoderCount2/cpr);
 }

@@ -12,16 +12,13 @@ const int ain1 = 26;            // Pin 1 for motor A
 const int ain2 = 25;            // Pin 2 for motor A
 const int bin1 = 27;            // Pin 1 for motor B
 const int bin2 = 33;            // Pin 2 for motor B
-const int encoderAAPin = 26;    // Encoder A pin for motor A
-const int encoderBAPin = 25;    // Encoder B pin for motor A
-const int encoderABPin = 32;    // Encoder A pin for motor B
-const int encoderBBPin = 14;    // Encoder B pin for motor B
+const int AAPin = 26;           // Encoder A pin for motor A
+const int BAPin = 25;           // Encoder B pin for motor A
+const int ABPin = 32;           // Encoder A pin for motor B
+const int BBPin = 14;           // Encoder B pin for motor B
 const int vlimButton = 0;       // Vertical limit switch pin
 const int hlimButton = 0;       // Horizontal limit switch pin
 const int canvasLimit = 1;      // Maximum canvas bounds
-
-// To convert encoder ticks to revolutions
-const int countsPerRevolution = 700;  // 700 encoder ticks per revolution for our motor
 
 // Define booleans
 bool toggleControl = true;      // Checks if button was pressed
@@ -37,6 +34,7 @@ ButtonHandler manualControl(manualButton);
 ButtonHandler diagCardControl(diagCardButton);
 ButtonHandler verticalLim(vlimButton);
 ButtonHandler horizontalLim(hlimButton);
+EncoderHandler encoderHandler(AAPin, BAPin, ABPin, BBPin);
 
 // Limit switch interrupt functions
 void IRAM_ATTR vlim() {         // Vertical limit switch function
@@ -49,6 +47,14 @@ void IRAM_ATTR hlim() {         // Horizontal limit switch function
   if (horizontalLim.detectRisingEdge(digitalRead(hlimButton))) { // Debounce for limit switch
     horizontalLimit = true;     // Change state
   }
+}
+
+void IRAM_ATTR enc1() {         // Encoder updater 1
+  encoderHandler.handleEncoder1();
+}
+
+void IRAM_ATTR enc2() {         // Encoder updater 2
+  encoderHandler.handleEncoder2();
 }
 
 void setup() {
@@ -66,10 +72,10 @@ void setup() {
   attachInterrupt(vlimButton, vlim, INPUT_PULLUP);  // Limit button interrupt functions
   attachInterrupt(hlimButton, hlim, INPUT_PULLUP);  
 
-  attachInterrupt(encoderAAPin, handleEncoder1, CHANGE);  // Encoder pin interrupt functions
-  attachInterrupt(encoderBAPin, handleEncoder1, CHANGE);
-  attachInterrupt(encoderABPin, handleEncoder2, CHANGE);
-  attachInterrupt(encoderBBPin, handleEncoder2, CHANGE);
+  attachInterrupt(AAPin, enc1, CHANGE);             // Encoder pin interrupt functions
+  attachInterrupt(BAPin, enc1, CHANGE);
+  attachInterrupt(ABPin, enc2, CHANGE);
+  attachInterrupt(BBPin, enc2, CHANGE);
 
   digitalWrite(ain1, LOW);                          // Turn off all motors
   digitalWrite(ain2, LOW);
