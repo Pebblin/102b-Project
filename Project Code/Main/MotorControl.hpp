@@ -5,11 +5,10 @@ class MotorControl { // Class Declaration
   public:
     MotorControl(int a1, int a2, int b1, int b2); // Constructor
 
-    // TODO: Implement a way to move the carriage by x and y amount
-    void right(int encoderTicks = 999); // Motion commands
-    void left(int encoderTicks = 999);
-    void up(int encoderTicks = 999);
-    void down(int encoderTicks = 999);
+    void right(); // Motion commands
+    void left();
+    void up();
+    void down();
     void upright();
     void upleft();
     void downright();

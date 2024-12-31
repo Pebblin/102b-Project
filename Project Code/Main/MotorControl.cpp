@@ -10,7 +10,7 @@ MotorControl::MotorControl(int a1, int a2, int b1, int b2) { // Constructor
 
 
 // 1h 2l for CW, 1l 2h for CCW
-void MotorControl::right(int encoderTicks) { // 1 CCW 2 CCW
+void MotorControl::right() { // 1 CCW 2 CCW
   digitalWrite(ain1, LOW);
   digitalWrite(ain2, HIGH);
 
@@ -18,7 +18,7 @@ void MotorControl::right(int encoderTicks) { // 1 CCW 2 CCW
   digitalWrite(bin2, HIGH);
 }
 
-void MotorControl::left(int encoderTicks) { // 1 CW 2 CW
+void MotorControl::left() { // 1 CW 2 CW
   digitalWrite(ain1, HIGH);
   digitalWrite(ain2, LOW);
 
@@ -26,7 +26,7 @@ void MotorControl::left(int encoderTicks) { // 1 CW 2 CW
   digitalWrite(bin2, LOW);
 }
 
-void MotorControl::up(int encoderTicks) { // 1 CCW 2 CW
+void MotorControl::up() { // 1 CCW 2 CW
   digitalWrite(ain1, LOW);
   digitalWrite(ain2, HIGH);
 
@@ -34,7 +34,7 @@ void MotorControl::up(int encoderTicks) { // 1 CCW 2 CW
   digitalWrite(bin2, LOW);
 }
 
-void MotorControl::down(int encoderTicks) { // 1 CCW 2 CW
+void MotorControl::down() { // 1 CCW 2 CW
   digitalWrite(ain1, LOW);
   digitalWrite(ain2, HIGH);
 
